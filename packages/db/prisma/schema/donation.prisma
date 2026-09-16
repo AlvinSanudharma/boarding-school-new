@@ -1,0 +1,31 @@
+model DonationCampaign {
+    id         String     @id @default(uuid())
+    name       String
+    target     Int
+    deadline   DateTime
+    created_at DateTime   @default(now())
+    updated_at DateTime   @default(now()) @updatedAt
+    donations  Donation[]
+
+    @@map("donation_campaigns")
+}
+
+enum StatusTransaction {
+    PENDING
+    SUCCESS
+    FAILED
+}
+
+model Donation {
+    id          String            @id @default(uuid())
+    user_id     String
+    user        User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    campaign_id String
+    campaign    DonationCampaign  @relation(fields: [campaign_id], references: [id], onDelete: Cascade)
+    amount      Int
+    status      StatusTransaction
+    created_at  DateTime          @default(now())
+    updated_at  DateTime          @default(now()) @updatedAt
+
+    @@map("donations")
+}

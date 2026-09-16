@@ -1,0 +1,44 @@
+enum CourseStatus {
+    ACTIVE
+    INACTIVE
+}
+
+model Course {
+    id                  String               @id @default(uuid())
+    thumbnail           String
+    name                String
+    description         String
+    category            String
+    status              CourseStatus
+    created_at          DateTime             @default(now())
+    updated_at          DateTime             @default(now()) @updatedAt
+    courseModules       CourseModule[]
+    courseModuleLessons CourseModuleLesson[]
+
+    @@map("courses")
+}
+
+model CourseModule {
+    id                  String               @id @default(uuid())
+    course_id           String
+    course              Course               @relation(fields: [course_id], references: [id], onDelete: Cascade)
+    name                String
+    description         String
+    created_at          DateTime             @default(now())
+    updated_at          DateTime             @default(now()) @updatedAt
+    courseModuleLessons CourseModuleLesson[]
+
+    @@map("course_modules")
+}
+
+model CourseModuleLesson {
+    id         String       @id @default(uuid())
+    course_id  String
+    course     Course       @relation(fields: [course_id], references: [id], onDelete: Cascade)
+    module_id  String
+    module     CourseModule @relation(fields: [module_id], references: [id], onDelete: Cascade)
+    created_at DateTime     @default(now())
+    updated_at DateTime     @default(now()) @updatedAt
+
+    @@map("course_module_lessons")
+}
