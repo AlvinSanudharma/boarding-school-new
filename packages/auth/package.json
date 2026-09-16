@@ -1,0 +1,20 @@
+{
+  "name": "@boarding-school-new/auth",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@boarding-school-new/db": "workspace:*",
+    "better-auth": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@boarding-school-new/config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

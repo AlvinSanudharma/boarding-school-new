@@ -1,0 +1,6 @@
+{
+  "extends": "@boarding-school-new/config/tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true
+  }
+}
