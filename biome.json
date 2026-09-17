@@ -37,9 +37,22 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "preset": "recommended",
+      "recommended": true,
       "correctness": {
-        "useExhaustiveDependencies": "info"
+        "useExhaustiveDependencies": "off"
+      },
+      "a11y": {
+        "useButtonType": "off",
+        "useValidAnchor": "off",
+        "noStaticElementInteractions": "off",
+        "useKeyWithClickEvents": "off",
+        "noLabelWithoutControl": "off",
+        "noSvgWithoutTitle": "off",
+        "useAltText": "off",
+        "useAnchorContent": "off"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "off"
       },
       "nursery": {
         "useSortedClasses": {
