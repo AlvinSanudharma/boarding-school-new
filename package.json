@@ -39,6 +39,8 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
+    "react-hook-form": "^7.88.0",
     "zod": "catalog:"
   },
   "devDependencies": {
