@@ -1,6 +1,7 @@
 import type { Database } from "@boarding-school-new/db";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
+import { admin } from "better-auth/plugins";
 
 export type AuthConfig = {
   BETTER_AUTH_URL: string;
@@ -28,7 +29,7 @@ export function createAuth(
         httpOnly: true,
       },
     },
-    plugins: [],
+    plugins: [admin()],
   });
 }
 

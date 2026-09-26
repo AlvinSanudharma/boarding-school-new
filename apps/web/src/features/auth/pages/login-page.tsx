@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import AuthLayout from "../components/auth-layout";
+import useFormLogin from "../hooks/use-form-login";
 
 type ToastType = "success" | "error" | "info";
 
@@ -24,6 +25,11 @@ interface Toast {
 }
 
 export default function LoginPage() {
+  const { form, onSubmit } = useFormLogin();
+  const {
+    register,
+    formState: { errors, isSubmitting },
+  } = form;
   const [currentRole, setCurrentRole] = useState<"student" | "admin">("admin");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -129,7 +135,7 @@ export default function LoginPage() {
       {/* Login Form */}
       <form
         id="loginForm"
-        onSubmit={handleLogin}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-5"
       >
         {/* Email Input */}
@@ -147,12 +153,16 @@ export default function LoginPage() {
             <input
               type="email"
               id="inputEmail"
-              name="inputEmail"
               className="w-full rounded-xl border border-border bg-white py-3.5 pr-4 pl-11 font-medium outline-none transition-all placeholder:text-secondary/50 focus:border-primary focus:ring-1 focus:ring-primary"
               placeholder={getEmailPlaceholder()}
-              required
+              {...register("email")}
             />
           </div>
+          {errors?.email && (
+            <span className="text-sm text-red-500">
+              {errors?.email?.message}
+            </span>
+          )}
         </div>
 
         {/* Password Input */}
@@ -170,10 +180,9 @@ export default function LoginPage() {
             <input
               type={showPassword ? "text" : "password"}
               id="inputPassword"
-              name="inputPassword"
               className="w-full rounded-xl border border-border bg-white py-3.5 pr-12 pl-11 font-medium outline-none transition-all placeholder:text-secondary/50 focus:border-primary focus:ring-1 focus:ring-primary"
               placeholder="••••••••"
-              required
+              {...register("password")}
             />
             <button
               type="button"
@@ -188,6 +197,11 @@ export default function LoginPage() {
               )}
             </button>
           </div>
+          {errors?.password && (
+            <span className="text-sm text-red-500">
+              {errors?.password?.message}
+            </span>
+          )}
         </div>
 
         {/* Form Options */}
@@ -216,12 +230,12 @@ export default function LoginPage() {
         {/* Submit Button */}
         <button
           type="submit"
-          disabled={isLoading}
+          disabled={isSubmitting}
           className={`mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 font-bold text-white transition-colors hover:bg-primary-hover ${
-            isLoading ? "cursor-not-allowed opacity-80" : ""
+            isSubmitting ? "cursor-not-allowed opacity-80" : ""
           }`}
         >
-          {isLoading ? (
+          {isSubmitting ? (
             <>
               <Loader2 className="size-5 animate-spin" />
               <span>Authenticating...</span>
